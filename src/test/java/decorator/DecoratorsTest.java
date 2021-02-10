@@ -1,4 +1,6 @@
-import com.epam.rd.autocode.decorator.Decorators;
+package decorator;
+
+import com.epam.rd.autocode.decorator.StringElements;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,7 +12,7 @@ public class DecoratorsTest {
     @Test
     public void evenElementsSubListTen() {
         final List<String> list = Arrays.asList("1,2,3,4,5,6,7,8,9,10".split(","));
-        final List<String> even = Decorators.evenIndexElementsSubList(list);
+        final List<String> even = new StringElements(list).evenIndexElementsSubList();
 
         assertEquals(5, even.size());
         assertEquals("1", even.get(0));
@@ -22,7 +24,7 @@ public class DecoratorsTest {
     @Test
     public void evenElementsSubListQwerty() {
         final List<String> list = Arrays.asList("q,w,e,r,t,y,u,i,o,p".split(","));
-        final List<String> even = Decorators.evenIndexElementsSubList(list);
+        final List<String> even = new StringElements(list).evenIndexElementsSubList();
 
         assertEquals(5, even.size());
         assertEquals("q", even.get(0));
@@ -34,7 +36,7 @@ public class DecoratorsTest {
     @Test
     public void evenElementsSubListAbc() {
         final List<String> list = Arrays.asList("a,b,c,d,e".split(","));
-        final List<String> even = Decorators.evenIndexElementsSubList(list);
+        final List<String> even = new StringElements(list).evenIndexElementsSubList();
 
         assertEquals(3, even.size());
         assertEquals("a", even.get(0));
