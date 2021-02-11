@@ -2,10 +2,10 @@ package com.epam.rd.autocode.decorator;
 
 import java.util.List;
 
-public class AllElements implements Elements<String> {
+public class ArrayListElements implements ListElements {
     private final List<String> source;
 
-    public AllElements(List<String> source) {
+    public ArrayListElements(List<String> source) {
         this.source = source;
     }
 

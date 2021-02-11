@@ -3,20 +3,16 @@ package com.epam.rd.autocode.decorator;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Decorators implements Elements<String> {
-    private final Elements<String> elements;
-    private final List<String> source;
+public class Decorators implements ListElements {
+    private final ListElements elements;
+    private static List<String> source;
 
-    public Decorators(Elements<String> elements, List<String> source) {
+    public Decorators(ListElements elements) {
         this.elements = elements;
-        this.source = source;
-    }
-
-    public Elements<String> getElements() {
-        return elements;
     }
 
     public static List<String> evenIndexElementsSubList(List<String> source) {
+        Decorators.source = source;
         List<String> newSource = new ArrayList<>();
         for (int i = 0; i < source.size(); i++) {
             if (i % 2 == 0) newSource.add(source.get(i));
@@ -26,16 +22,20 @@ public abstract class Decorators implements Elements<String> {
 
     @Override
     public String get(int element) {
-        return source.get(element);
+        return evenIndexElementsSubList(source).get(element);
     }
 
     @Override
     public String size() {
-        return String.valueOf(source.size());
+        return String.valueOf(evenIndexElementsSubList(source).size());
     }
 
     @Override
     public void iterator() {
-        for (String element : source) System.out.printf("%s ", element);
+        for (String element : evenIndexElementsSubList(source)) System.out.printf("%s ", element);
+    }
+
+    public ListElements getElements() {
+        return elements;
     }
 }
