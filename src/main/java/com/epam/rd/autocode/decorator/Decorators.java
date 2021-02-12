@@ -1,41 +1,14 @@
 package com.epam.rd.autocode.decorator;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Decorators implements ListElements {
-    private final ListElements elements;
-    private static List<String> source;
-
-    public Decorators(ListElements elements) {
-        this.elements = elements;
-    }
-
-    public static List<String> evenIndexElementsSubList(List<String> source) {
-        Decorators.source = source;
-        List<String> newSource = new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            if (i % 2 == 0) newSource.add(source.get(i));
-        }
-        return newSource;
+public class Decorators extends ArrayListDecorator{
+    public Decorators(List<String> source) {
+        super(source);
     }
 
     @Override
-    public String get(int element) {
-        return evenIndexElementsSubList(source).get(element);
-    }
-
-    @Override
-    public String size() {
-        return String.valueOf(evenIndexElementsSubList(source).size());
-    }
-
-    @Override
-    public void iterator() {
-        for (String element : evenIndexElementsSubList(source)) System.out.printf("%s ", element);
-    }
-
-    public ListElements getElements() {
-        return elements;
+    public List<String> evenIndexElementsSubList(List<String> source) {
+        return super.evenIndexElementsSubList(source);
     }
 }
