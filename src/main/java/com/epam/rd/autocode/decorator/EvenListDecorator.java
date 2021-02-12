@@ -2,24 +2,16 @@ package com.epam.rd.autocode.decorator;
 
 import java.util.*;
 
-public class ArrayListDecorator implements List<String> {
+public class EvenListDecorator implements List<String> {
     private final List<String> source;
 
-    public ArrayListDecorator(List<String> source) {
+    public EvenListDecorator(List<String> source) {
         this.source = source;
-    }
-
-    public List<String> evenIndexElementsSubList(List<String> source) {
-        List<String> newSource = new ArrayList<>();
-        for (int i = 0; i < source.size(); i++) {
-            if (i % 2 == 0) newSource.add(source.get(i));
-        }
-        return newSource;
     }
 
     @Override
     public int size() {
-        return evenIndexElementsSubList(source).size();
+        return source.size() % 2 == 0 ? source.size() / 2 : source.size() / 2 + 1;
     }
 
     @Override
@@ -84,12 +76,15 @@ public class ArrayListDecorator implements List<String> {
 
     @Override
     public void clear() {
-
     }
 
     @Override
     public String get(int index) {
-        return evenIndexElementsSubList(source).get(index);
+        return source.get(getEvenIndexFromSource(index));
+    }
+
+    private int getEvenIndexFromSource(int index) {
+        return index * 2;
     }
 
     @Override
@@ -119,11 +114,13 @@ public class ArrayListDecorator implements List<String> {
 
     @Override
     public ListIterator<String> listIterator() {
-        return null;
+        return getEvenList().listIterator();
     }
 
-    public void printIterator() {
-        for (String element : evenIndexElementsSubList(source)) System.out.printf("%s ", element);
+    private List<String> getEvenList() {
+        List<String> evenIndex = new ArrayList<>();
+        for (int i = 0; i < size(); i++) evenIndex.add(get(i));
+        return evenIndex;
     }
 
     @Override

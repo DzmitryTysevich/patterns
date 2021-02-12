@@ -7,8 +7,7 @@ public class Decorators extends ArrayListDecorator{
         super(source);
     }
 
-    @Override
-    public List<String> evenIndexElementsSubList(List<String> source) {
-        return super.evenIndexElementsSubList(source);
+    public static List<String> evenIndexElementsSubList(List<String> source) {
+        return new EvenListDecorator(source);
     }
 }
