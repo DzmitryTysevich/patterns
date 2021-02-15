@@ -22,18 +22,26 @@ public class IntArrayThreeTimesIterator implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         } else {
-            indexCounter++;
+            countIndexRepeat();
             return array[getTripleIndex()];
         }
+    }
+
+    private void countIndexRepeat() {
+        indexCounter++;
     }
 
     private Integer getTripleIndex() {
         int value = index;
         if (indexCounter == 3) {
-            index++;
+            increaseIndex();
             resetIndexCounter();
         }
         return value;
+    }
+
+    private void increaseIndex() {
+        index++;
     }
 
     private void resetIndexCounter() {
