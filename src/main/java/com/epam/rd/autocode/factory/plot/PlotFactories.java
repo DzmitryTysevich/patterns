@@ -1,20 +1,20 @@
 package com.epam.rd.autocode.factory.plot;
 
-import com.epam.rd.autocode.factory.plot.disney.ClassicDisney;
-import com.epam.rd.autocode.factory.plot.disney.ContemporaryDisney;
-import com.epam.rd.autocode.factory.plot.disney.MarvelDisney;
+import com.epam.rd.autocode.factory.plot.disney.ClassicDisneyPlotFactory;
+import com.epam.rd.autocode.factory.plot.disney.ContemporaryDisneyPlotFactory;
+import com.epam.rd.autocode.factory.plot.disney.MarvelDisneyPlotFactory;
 
 class PlotFactories {
 
     public PlotFactory classicDisneyPlotFactory(Character hero, Character beloved, Character villain) {
-        return new ClassicDisney(hero, beloved, villain);
+        return new ClassicDisneyPlotFactory(hero, beloved, villain);
     }
 
     public PlotFactory contemporaryDisneyPlotFactory(Character hero, EpicCrisis epicCrisis, Character funnyFriend) {
-        return new ContemporaryDisney(hero, epicCrisis, funnyFriend);
+        return new ContemporaryDisneyPlotFactory(hero, epicCrisis, funnyFriend);
     }
 
     public PlotFactory marvelPlotFactory(Character[] heroes, EpicCrisis epicCrisis, Character villain) {
-        return new MarvelDisney(heroes, epicCrisis, villain);
+        return new MarvelDisneyPlotFactory(heroes, epicCrisis, villain);
     }
 }

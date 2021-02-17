@@ -4,27 +4,27 @@ import com.epam.rd.autocode.factory.plot.Character;
 import com.epam.rd.autocode.factory.plot.EpicCrisis;
 import com.epam.rd.autocode.factory.plot.Plot;
 import com.epam.rd.autocode.factory.plot.PlotFactory;
-import com.epam.rd.autocode.factory.plot.plot.MarvellDisneyPlot;
+import com.epam.rd.autocode.factory.plot.plot.ContemporaryDisneyPlot;
 
-public class MarvelDisney implements PlotFactory {
-    private final Character[] heroes;
+public class ContemporaryDisneyPlotFactory implements PlotFactory {
+    private final Character hero;
     private final EpicCrisis epicCrisis;
-    private final Character villain;
+    private final Character funnyFriend;
 
-    public MarvelDisney(Character[] heroes, EpicCrisis epicCrisis, Character villain) {
-        this.heroes = heroes;
+    public ContemporaryDisneyPlotFactory(Character hero, EpicCrisis epicCrisis, Character funnyFriend) {
+        this.hero = hero;
         this.epicCrisis = epicCrisis;
-        this.villain = villain;
+        this.funnyFriend = funnyFriend;
     }
 
     @Override
     public Plot plot() {
-        return new MarvellDisneyPlot(getCharacters(), getEpicCrisis(), getVillain());
+        return new ContemporaryDisneyPlot(getHero(), getEpicCrisis(), getFunnyFriend());
     }
 
     @Override
     public Character getHero() {
-        return null;
+        return hero;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MarvelDisney implements PlotFactory {
 
     @Override
     public Character getVillain() {
-        return villain;
+        return null;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class MarvelDisney implements PlotFactory {
 
     @Override
     public Character getFunnyFriend() {
-        return null;
+        return funnyFriend;
     }
 
     @Override
     public Character[] getCharacters() {
-        return heroes;
+        return new Character[0];
     }
 }

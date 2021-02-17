@@ -6,12 +6,12 @@ import com.epam.rd.autocode.factory.plot.Plot;
 import com.epam.rd.autocode.factory.plot.PlotFactory;
 import com.epam.rd.autocode.factory.plot.plot.ClassicDisneyPlot;
 
-public class ClassicDisney implements PlotFactory {
+public class ClassicDisneyPlotFactory implements PlotFactory {
     private final Character hero;
     private final Character beloved;
     private final Character villain;
 
-    public ClassicDisney(Character hero, Character beloved, Character villain) {
+    public ClassicDisneyPlotFactory(Character hero, Character beloved, Character villain) {
         this.hero = hero;
         this.beloved = beloved;
         this.villain = villain;
