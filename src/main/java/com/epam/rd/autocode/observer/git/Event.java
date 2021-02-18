@@ -47,7 +47,7 @@ public class Event {
         return result;
     }
 
-    public enum Type {
+    enum Type {
         COMMIT,
         MERGE
     }

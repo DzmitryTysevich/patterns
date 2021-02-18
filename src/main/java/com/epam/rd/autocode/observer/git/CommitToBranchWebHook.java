@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CommitToBranchWebHook implements WebHook {
     private final String branchName;
+    private final List<Event> caughtEvents = new ArrayList<>();
 
     public CommitToBranchWebHook(String branchName) {
         this.branchName = branchName;
@@ -22,18 +23,16 @@ public class CommitToBranchWebHook implements WebHook {
 
     @Override
     public List<Event> caughtEvents() {
-        List<Event> events = new ArrayList<>();
-        events.add(NewRepository.eventToCommitBranch);
-        return events;
+        return caughtEvents;
     }
 
     @Override
     public void onEvent(Event event) {
-
+        caughtEvents.add(event);
     }
 
     @Override
     public String toString() {
-        return caughtEvents().toString();
+        return caughtEvents.toString();
     }
 }

@@ -57,7 +57,6 @@ public class GitRepoObserversTest {
                         " Commit[Johnny Silverhand, [Added cyberanarchy manifest]]]]]",
                 mergeMasterBranch.caughtEvents().toString()
         );
-
     }
 
     @Test
@@ -124,7 +123,6 @@ public class GitRepoObserversTest {
 
     }
 
-
     @Test
     public void readmeCaseWithPreviousCommitsAndBackwardEmptyMerge() {
         final Repository repo = GitRepoObservers.newRepository();
@@ -170,7 +168,6 @@ public class GitRepoObserversTest {
         repo.merge("dev-readme", "master");
         repo.merge("master", "dev-readme");
         repo.merge("dev-readme", "master");
-
 
         assertEquals(
                 "[]",
@@ -244,7 +241,6 @@ public class GitRepoObserversTest {
 
         repo.merge("master", "dev-readme");
         repo.merge("dev-readme", "master");
-
 
         assertEquals(
                 "[Event[COMMIT, master, [Commit[CrashOverrider, [Added full implementation]]]]]",

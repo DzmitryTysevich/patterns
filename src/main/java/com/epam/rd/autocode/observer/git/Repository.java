@@ -1,7 +1,5 @@
 package com.epam.rd.autocode.observer.git;
 
-import java.util.List;
-
 public interface Repository {
     void addWebHook(WebHook webHook);
 

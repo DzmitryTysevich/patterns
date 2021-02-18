@@ -2,9 +2,11 @@ package com.epam.rd.autocode.observer.git;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MergeToBranchWebHook implements WebHook {
     private final String branchName;
+    private final List<Event> caughtEvents = new ArrayList<>();
 
     public MergeToBranchWebHook(String branchName) {
         this.branchName = branchName;
@@ -22,18 +24,22 @@ public class MergeToBranchWebHook implements WebHook {
 
     @Override
     public List<Event> caughtEvents() {
-        List<Event> events = new ArrayList<>();
-        events.add(NewRepository.eventToMergeBranch);
-        return events;
+        return caughtDistinctEvents();
+    }
+
+    private List<Event> caughtDistinctEvents() {
+        return caughtEvents.stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     @Override
     public void onEvent(Event event) {
-
+        caughtEvents.add(event);
     }
 
     @Override
     public String toString() {
-        return caughtEvents().toString();
+        return caughtEvents.toString();
     }
 }

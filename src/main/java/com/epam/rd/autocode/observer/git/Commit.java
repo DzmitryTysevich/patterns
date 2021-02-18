@@ -54,7 +54,6 @@ public class Commit {
     @Override
     public String toString() {
         return new StringJoiner(", ", Commit.class.getSimpleName() + "[", "]")
-                .add(branch)
                 .add(author)
                 .add(Arrays.toString(changes))
                 .toString();
