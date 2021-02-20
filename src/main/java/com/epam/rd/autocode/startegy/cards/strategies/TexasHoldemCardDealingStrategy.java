@@ -39,14 +39,14 @@ public class TexasHoldemCardDealingStrategy implements CardDealingStrategy {
 
     private List<Card> getPlayerCards(List<Card> cards, int playerIndex, int players) {
         List<Card> playerCards = null;
-        for (int j = playerIndex; j < cards.size(); j += players)
-            playerCards = Arrays.asList(cards.get(playerIndex), cards.get(j));
+        for (int cardIndex = playerIndex; cardIndex < cards.size(); cardIndex += players)
+            playerCards = Arrays.asList(cards.get(playerIndex), cards.get(cardIndex));
         return playerCards;
     }
 
     private List<Card> getCardsForPlayers(Deck deck, int players) {
         List<Card> cards = new LinkedList<>();
-        for (int i = 0; i < players * playerAmountCards; i++) cards.add(deck.dealCard());
+        for (int index = 0; index < players * playerAmountCards; index++) cards.add(deck.dealCard());
         return cards;
     }
 

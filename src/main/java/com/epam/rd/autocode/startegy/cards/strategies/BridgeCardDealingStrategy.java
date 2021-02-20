@@ -28,14 +28,14 @@ public class BridgeCardDealingStrategy implements CardDealingStrategy {
 
     private List<Card> getPlayerCards(List<Card> cards, int playerIndex, int players) {
         List<Card> playerCards = new ArrayList<>();
-        for (int cardIndex = playerIndex, index = 0; cardIndex < cards.size(); cardIndex += players, index++)
-            playerCards.add(cards.get(playerIndex + players * index));
+        for (int cardIndex = playerIndex, step = 0; cardIndex < cards.size(); cardIndex += players, step++)
+            playerCards.add(cards.get(playerIndex + players * step));
         return playerCards;
     }
 
     private List<Card> getCardsForPlayers(Deck deck, int players) {
         List<Card> cards = new LinkedList<>();
-        for (int i = 0; i < players * playerAmountCard; i++) cards.add(deck.dealCard());
+        for (int index = 0; index < players * playerAmountCard; index++) cards.add(deck.dealCard());
         return cards;
     }
 
