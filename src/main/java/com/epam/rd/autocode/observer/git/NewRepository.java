@@ -1,8 +1,6 @@
 package com.epam.rd.autocode.observer.git;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.epam.rd.autocode.observer.git.Event.Type.COMMIT;
@@ -10,11 +8,11 @@ import static com.epam.rd.autocode.observer.git.Event.Type.MERGE;
 
 public class NewRepository implements Repository {
     private final List<WebHook> webHooks;
-    private final List<Commit> commits;
+    private final Map<String, Set<Commit>> commits;
 
     public NewRepository() {
         this.webHooks = new ArrayList<>();
-        this.commits = new ArrayList<>();
+        this.commits = new HashMap<>();
     }
 
     @Override
@@ -25,10 +23,20 @@ public class NewRepository implements Repository {
     @Override
     public Commit commit(String branch, String author, String[] changes) {
         Commit commit = new Commit(branch, author, changes);
-        if (!webHooks.isEmpty())
-            commits.add(commit);
+        addCommitToBranch(commit, branch);
         notifyHooksAboutCommit(branch, commit);
         return commit;
+    }
+
+    private void addCommitToBranch(Commit commit, String branch) {
+        Set<Commit> commits = this.commits.get(branch);
+        if (commits != null) {
+            commits.add(commit);
+        } else {
+            commits = new HashSet<>();
+            commits.add(commit);
+            this.commits.put(branch, commits);
+        }
     }
 
     private void notifyHooksAboutCommit(String branch, Commit commit) {
@@ -39,34 +47,27 @@ public class NewRepository implements Repository {
 
     @Override
     public void merge(String sourceBranch, String targetBranch) {
-        notifyHooksAboutMerge(mergeCommit(sourceBranch, targetBranch));
-        notifyHooksAboutErrorMerge(mergeErrorCommit(sourceBranch, targetBranch));
+        List<Commit> addedCommits = mergeCommits(sourceBranch, targetBranch);
+        notifyHooksAboutMerge(targetBranch, addedCommits);
     }
 
-    private List<Commit> mergeCommit(String sourceBranch, String targetBranch) {
-        return commits.stream()
-                .filter(commit -> commit.branch().equals(sourceBranch) && !commit.author().equals("CrashOverrider"))
-                .peek(commit -> commit.setBranch(targetBranch))
+    private List<Commit> mergeCommits(String sourceBranch, String targetBranch) {
+        Set<Commit> sourceBranchCommits = commits.get(sourceBranch);
+        return sourceBranchCommits.stream()
+                .filter(commit -> isNotInBranch(commit, targetBranch))
+                .peek(commit -> addCommitToBranch(commit, targetBranch))
                 .collect(Collectors.toList());
     }
 
-    private List<Commit> mergeErrorCommit(String sourceBranch, String targetBranch) {
-        return commits.stream()
-                .filter(commit -> commit.branch().equals(sourceBranch) && commit.author().equals("CrashOverrider"))
-                .peek(commit -> commit.setBranch(targetBranch))
-                .collect(Collectors.toList());
+    private boolean isNotInBranch(Commit commit, String targetBranch) {
+        Set<Commit> commits = this.commits.get(targetBranch);
+        return commits == null || !commits.contains(commit);
     }
 
-    private void notifyHooksAboutMerge(List<Commit> targetBranchCommit) {
+    private void notifyHooksAboutMerge(String branch, List<Commit> targetBranchCommits) {
         webHooks.stream()
-                .filter(webHook -> webHook.type().equals(MERGE) && webHook.branch().equals("master") && !targetBranchCommit.isEmpty())
-                .forEach(webHook -> webHook.onEvent(new Event(COMMIT, "branch", targetBranchCommit)));
-    }
-
-    private void notifyHooksAboutErrorMerge(List<Commit> targetBranchCommit) {
-        webHooks.stream()
-                .filter(webHook -> webHook.type().equals(MERGE) && webHook.branch().equals("dev-readme") && !targetBranchCommit.isEmpty())
-                .forEach(webHook -> webHook.onEvent(new Event(COMMIT, "branch", targetBranchCommit)));
+                .filter(webHook -> webHook.type().equals(MERGE) && webHook.branch().equals(branch) && !targetBranchCommits.isEmpty())
+                .forEach(webHook -> webHook.onEvent(new Event(COMMIT, "branch", targetBranchCommits)));
     }
 
     @Override
