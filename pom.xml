@@ -21,6 +21,13 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>br.com.objectos</groupId>
+            <artifactId>multimaps</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

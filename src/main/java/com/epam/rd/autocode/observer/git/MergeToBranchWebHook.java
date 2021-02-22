@@ -28,9 +28,7 @@ public class MergeToBranchWebHook implements WebHook {
     }
 
     private List<Event> caughtDistinctEvents() {
-        return caughtEvents.stream()
-                .distinct()
-                .collect(Collectors.toList());
+        return caughtEvents;
     }
 
     @Override
