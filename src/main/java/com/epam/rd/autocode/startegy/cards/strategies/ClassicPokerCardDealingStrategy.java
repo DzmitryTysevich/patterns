@@ -7,10 +7,10 @@ import com.epam.rd.autocode.startegy.cards.Deck;
 import java.util.*;
 
 public class ClassicPokerCardDealingStrategy implements CardDealingStrategy {
-    private final String string = "Player ";
-    private final String remaining = "Remaining";
+    private final static String STRING = "Player ";
+    private final static String REMAINING = "Remaining";
     private Map<String, List<Card>> stack;
-    private final int playerAmountCard = 5;
+    private final static int PLAYER_AMOUNT_CARDS = 5;
 
     @Override
     public Map<String, List<Card>> dealStacks(Deck deck, int players) {
@@ -24,7 +24,7 @@ public class ClassicPokerCardDealingStrategy implements CardDealingStrategy {
         List<Card> cards = getCardsForPlayers(deck, players);
         for (int playerIndex = 0, mapIndex = 1; playerIndex < players; playerIndex++, mapIndex++) {
             List<Card> playerCards = getPlayerCards(cards, playerIndex, players);
-            stack.put(string + mapIndex, playerCards);
+            stack.put(STRING + mapIndex, playerCards);
         }
     }
 
@@ -37,7 +37,7 @@ public class ClassicPokerCardDealingStrategy implements CardDealingStrategy {
 
     private List<Card> getCardsForPlayers(Deck deck, int players) {
         List<Card> cards = new LinkedList<>();
-        for (int index = 0; index < players * playerAmountCard; index++) cards.add(deck.dealCard());
+        for (int index = 0; index < players * PLAYER_AMOUNT_CARDS; index++) cards.add(deck.dealCard());
         return cards;
     }
 
@@ -46,7 +46,7 @@ public class ClassicPokerCardDealingStrategy implements CardDealingStrategy {
         int remainingSize = deck.size();
         for (int dealIndex = 0; dealIndex < remainingSize; dealIndex++)
             communityWithCards.add(deck.dealCard());
-        stack.put(remaining, communityWithCards);
+        stack.put(REMAINING, communityWithCards);
     }
 
     @Override

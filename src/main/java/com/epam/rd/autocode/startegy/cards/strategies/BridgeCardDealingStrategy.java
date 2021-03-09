@@ -7,9 +7,9 @@ import com.epam.rd.autocode.startegy.cards.Deck;
 import java.util.*;
 
 public class BridgeCardDealingStrategy implements CardDealingStrategy {
-    private final String string = "Player ";
+    private final static String STRING = "Player ";
     private Map<String, List<Card>> stack;
-    private final int playerAmountCard = 13;
+    private final static int PLAYER_AMOUNT_CARDS = 13;
 
     @Override
     public Map<String, List<Card>> dealStacks(Deck deck, int players) {
@@ -22,7 +22,7 @@ public class BridgeCardDealingStrategy implements CardDealingStrategy {
         List<Card> cards = getCardsForPlayers(deck, players);
         for (int playerIndex = 0, mapIndex = 1; playerIndex < players; playerIndex++, mapIndex++) {
             List<Card> playerCards = getPlayerCards(cards, playerIndex, players);
-            stack.put(string + mapIndex, playerCards);
+            stack.put(STRING + mapIndex, playerCards);
         }
     }
 
@@ -35,7 +35,7 @@ public class BridgeCardDealingStrategy implements CardDealingStrategy {
 
     private List<Card> getCardsForPlayers(Deck deck, int players) {
         List<Card> cards = new LinkedList<>();
-        for (int index = 0; index < players * playerAmountCard; index++) cards.add(deck.dealCard());
+        for (int index = 0; index < players * PLAYER_AMOUNT_CARDS; index++) cards.add(deck.dealCard());
         return cards;
     }
 

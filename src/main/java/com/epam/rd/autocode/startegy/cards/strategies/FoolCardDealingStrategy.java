@@ -7,11 +7,11 @@ import com.epam.rd.autocode.startegy.cards.Deck;
 import java.util.*;
 
 public class FoolCardDealingStrategy implements CardDealingStrategy {
-    private final String string = "Player ";
-    private final String remaining = "Remaining";
+    private final static String STRING = "Player ";
+    private final static String REMAINING = "Remaining";
     private Map<String, List<Card>> stacks;
-    private final int playerAmountCards = 6;
-    private final String trump_card = "Trump card";
+    private final static int PLAYER_AMOUNT_CARDS = 6;
+    private final static String TRUMP_CARD = "Trump card";
 
     @Override
     public Map<String, List<Card>> dealStacks(Deck deck, int players) {
@@ -26,7 +26,7 @@ public class FoolCardDealingStrategy implements CardDealingStrategy {
         List<Card> cards = getCardsForPlayers(deck, players);
         for (int playerIndex = 0, mapIndex = 1; playerIndex < players; playerIndex++, mapIndex++) {
             List<Card> playerCards = getPlayerCards(cards, playerIndex, players);
-            stacks.put(string + mapIndex, playerCards);
+            stacks.put(STRING + mapIndex, playerCards);
         }
     }
 
@@ -39,7 +39,7 @@ public class FoolCardDealingStrategy implements CardDealingStrategy {
 
     private List<Card> getCardsForPlayers(Deck deck, int players) {
         List<Card> cards = new ArrayList<>();
-        for (int index = 0; index < players * playerAmountCards; index++) cards.add(deck.dealCard());
+        for (int index = 0; index < players * PLAYER_AMOUNT_CARDS; index++) cards.add(deck.dealCard());
         return cards;
     }
 
@@ -48,11 +48,11 @@ public class FoolCardDealingStrategy implements CardDealingStrategy {
         int remainingSize = deck.size();
         for (int dealIndex = 0; dealIndex < remainingSize; dealIndex++)
             remainingCards.add(deck.dealCard());
-        stacks.put(remaining, remainingCards);
+        stacks.put(REMAINING, remainingCards);
     }
 
     private void addTrumpCard(Deck deck) {
-        stacks.put(trump_card, Collections.singletonList(deck.dealCard()));
+        stacks.put(TRUMP_CARD, Collections.singletonList(deck.dealCard()));
     }
 
     @Override
